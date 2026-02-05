@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Paradise Restaurant | Admin Panel</title>
+
+<style>
+    body {
+        margin: 0;
+        height: 100vh;
+        font-family: "Segoe UI", Arial, sans-serif;
+        background:
+            linear-gradient(rgba(0,0,0,0.45), rgba(0,0,0,0.45)),
+            url("imgs/food imgs.avif");
+        background-size: cover;
+        background-position: center;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .admin-container {
+        background: rgba(255,255,255,0.95);
+        padding: 25px;
+        width: 420px;
+        border-radius: 12px;
+        box-shadow: 0 15px 30px rgba(0,0,0,0.3);
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    h1 {
+        text-align: center;
+        color: #4a00e0;
+    }
+
+    input, select, button {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 12px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+    }
+
+    button {
+        background: #4a00e0;
+        color: white;
+        font-size: 15px;
+        cursor: pointer;
+        border: none;
+    }
+
+    button:hover {
+        background: #3a00c5;
+    }
+
+    .item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #ddd;
+        padding: 8px;
+        border-radius: 6px;
+        margin-bottom: 10px;
+    }
+
+    .item img {
+        width: 60px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 6px;
+    }
+
+    .item-details {
+        flex: 1;
+        font-size: 14px;
+    }
+
+    .delete-btn {
+        background: #e53935;
+        padding: 6px 10px;
+        font-size: 13px;
+    }
+
+    .delete-btn:hover {
+        background: #c62828;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="admin-container">
+    <h1>Admin Panel</h1>
+
+    <input type="text" id="itemName" placeholder="Item Name">
+    <input type="number" id="itemPrice" placeholder="Item Price (₹)">
+    <input type="file" id="itemImg" accept="image/*">
+
+    <select id="itemCategory">
+    <option value="">Select Category</option>
+    <option value="veg-starters">Veg Starters</option>
+    <option value="veg-main">Veg Main Course</option>
+    <option value="nonveg-starters">Non-Veg Starters</option>
+    <option value="nonveg-main">Non-Veg Main Course</option>
+    <option value="snacks">Snacks</option>
+    <option value="softdrinks">Soft Drinks</option>
+</select>
+
+
+    <button onclick="addItem()">Add Item</button>
+
+    <hr>
+
+    <h3>Added Items</h3>
+    <div id="itemsList"></div>
+</div>
+
+<script>
+function addItem() {
+    const name = itemName.value.trim();
+    const price = itemPrice.value;
+    const category = itemCategory.value;
+    const file = itemImg.files[0];
+
+    if (!name || !price || !category || !file) {
+        alert("Fill all fields");
+        return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = function () {
+        const items = JSON.parse(localStorage.getItem("menuItems")) || [];
+        items.push({ name, price, category, img: reader.result });
+        localStorage.setItem("menuItems", JSON.stringify(items));
+
+        clearForm();
+        displayItems();
+    };
+    reader.readAsDataURL(file);
+}
+
+function displayItems() {
+    const items = JSON.parse(localStorage.getItem("menuItems")) || [];
+    const list = document.getElementById("itemsList");
+    list.innerHTML = "";
+
+    if (items.length === 0) {
+        list.innerHTML = "<p>No items added</p>";
+        return;
+    }
+
+    items.forEach((item, index) => {
+        list.innerHTML += `
+            <div class="item">
+                <img src="${item.img}">
+                <div class="item-details">
+                    <strong>${item.name}</strong><br>
+                    ₹${item.price} | ${item.category}
+                </div>
+                <button class="delete-btn" onclick="deleteItem(${index})">Delete</button>
+            </div>
+        `;
+    });
+}
+
+function deleteItem(index) {
+    const items = JSON.parse(localStorage.getItem("menuItems")) || [];
+    items.splice(index, 1);
+    localStorage.setItem("menuItems", JSON.stringify(items));
+    displayItems();
+}
+
+function clearForm() {
+    itemName.value = "";
+    itemPrice.value = "";
+    itemImg.value = "";
+    itemCategory.value = "";
+}
+
+displayItems(); // load on page start
+</script>
+
+</body>
+</html>

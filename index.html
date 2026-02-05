@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Paradise Restaurant</title>
+
+<style>
+   body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Blurred background layer */
+body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+
+    background-image: url("imgs/food imgs.avif");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    filter: blur(2px);          /* 🔥 blur strength */
+    transform: scale(1.1);     /* avoids edge cut after blur */
+    z-index: -1;
+}
+    h2 {
+        color: #080808;
+        margin-bottom: 5px;
+    }
+
+    .line {
+        height: 2px;
+        background: #050100;
+        margin-bottom: 20px;
+    }
+
+    /* MAIN LAYOUT */
+    .main {
+        display: flex;
+        gap: 30px;
+        align-items: flex-start;
+    }
+
+    /* LEFT SIDE MENU */
+    .menu-section {
+        width: 75%;
+    }
+
+    /* RIGHT SIDE CART */
+    .cart {
+        width: 25%;
+        background: white;
+        padding: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        position: sticky;
+        top: 20px;
+    }
+
+    /* MENU GRID */
+    .menu-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 40px;
+    }
+
+    .card {
+        background: white;
+        padding: 15px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        text-align: center;
+    }
+
+    .card img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+    }
+
+    .price {
+        font-weight: bold;
+        margin: 8px 0;
+    }
+
+    button {
+        background: green;
+        color: white;
+        border: none;
+        padding: 8px;
+        width: 100%;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .cart ul {
+        list-style: none;
+        padding: 0;
+    }
+
+    .total {
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .bill-btn {
+        background: #e74c3c;
+        margin-top: 15px;
+        font-size: 16px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="main">
+
+<div class="menu-section">
+
+<!-- VEG STARTERS -->
+<h2>Veg Starters</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/paneer_tikka.jpg">
+        <h3>Paneer Tikka</h3>
+        <div class="price">₹180</div>
+        <button onclick="addToCart('Paneer Tikka',180)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/vegmanchuria.jpeg">
+        <h3>Veg Manchurian</h3>
+        <div class="price">₹160</div>
+        <button onclick="addToCart('Veg Manchurian',160)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/crispy corn.jfif">
+        <h3>Crispy corn</h3>
+        <div class="price">₹180</div>
+        <button onclick="addToCart('Paneer Tikka',180)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/mixed veg lollipop.jpg">
+        <h3>mixed veg lollipop</h3>
+        <div class="price">₹160</div>
+        <button onclick="addToCart('Veg Manchurian',160)">Add</button>
+    </div>
+
+    
+</div>
+
+<!-- VEG MAIN COURSE -->
+<h2>Veg Main Course</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/Paneer-Butter-Masala-1-2.jpg">
+        <h3>Paneer Butter Masala</h3>
+        <div class="price">₹220</div>
+        <button onclick="addToCart('Paneer Butter Masala',220)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/Veg-Biryani-Recipe.jpg">
+        <h3>Veg Biryani</h3>
+        <div class="price">₹200</div>
+        <button onclick="addToCart('Veg Biryani',200)">Add</button>
+    </div>
+</div>
+
+<!-- NON-VEG STARTERS -->
+<h2>Non-Veg Starters</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/1200px-Chicken_65_Dish.jpg">
+        <h3>Chicken 65</h3>
+        <div class="price">₹220</div>
+        <button onclick="addToCart('Chicken 65',220)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/chicken-lollipop.jpg">
+        <h3>Chicken Lollipop</h3>
+        <div class="price">₹240</div>
+        <button onclick="addToCart('Chicken Lollipop',240)">Add</button>
+    </div>
+</div>
+
+<!-- NON-VEG MAIN COURSE -->
+<h2>Non-Veg Main Course</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/chickenbiryani.jpg">
+        <h3>Chicken Biryani</h3>
+        <div class="price">₹250</div>
+        <button onclick="addToCart('Chicken Biryani',250)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/mutton-curry.avif">
+        <h3>Mutton Curry</h3>
+        <div class="price">₹300</div>
+        <button onclick="addToCart('Mutton Curry',300)">Add</button>
+    </div>
+</div>
+
+<!-- SNACKS -->
+<h2>Snacks</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/samosa.jfif">
+        <h3>Samosa</h3>
+        <div class="price">₹30</div>
+        <button onclick="addToCart('Samosa',30)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/french fries.jfif">
+        <h3>French Fries</h3>
+        <div class="price">₹120</div>
+        <button onclick="addToCart('French Fries',120)">Add</button>
+    </div>
+</div>
+
+<!-- SOFT DRINKS -->
+<h2>Soft Drinks</h2><div class="line"></div>
+<div class="menu-grid">
+    <div class="card">
+        <img src="imgs/coke.jpg">
+        <h3>Coke</h3>
+        <div class="price">₹40</div>
+        <button onclick="addToCart('Coke',40)">Add</button>
+    </div>
+
+    <div class="card">
+        <img src="imgs/water.jpg">
+        <h3>Water Bottle</h3>
+        <div class="price">₹20</div>
+        <button onclick="addToCart('Water Bottle',20)">Add</button>
+    </div>
+</div>
+
+</div>
+    <!-- CART -->
+    <div class="cart">
+        <h3>Your Cart</h3>
+        <ul id="cartItems"></ul>
+        <div class="total">Total: ₹<span id="total">0</span></div>
+        <button class="bill-btn" onclick="goToBill()">Generate Bill</button>
+    </div>
+
+</div>
+
+<script>
+   
+const categories = {
+    "veg-starters": "Veg Starters",
+    "veg-main": "Veg Main Course",
+    "nonveg-starters": "Non-Veg Starters",
+    "nonveg-main": "Non-Veg Main Course",
+    "snacks": "Snacks",
+    "softdrinks": "Soft Drinks"
+};
+
+
+const items = JSON.parse(localStorage.getItem("menuItems")) || {};
+const container = document.querySelector(".menu-section");
+
+for (let key in categories) {
+    const sectionItems = items.filter(item => item.category === key);
+    if (sectionItems.length === 0) continue;
+
+    const h2 = document.createElement("h2");
+    h2.innerText = categories[key];
+
+    const line = document.createElement("div");
+    line.className = "line";
+
+    const grid = document.createElement("div");
+    grid.className = "menu-grid";
+
+    sectionItems.forEach(item => {
+        grid.innerHTML += `
+            <div class="card">
+                <img src="${item.img}">
+                <h3>${item.name}</h3>
+                <div class="price">₹${item.price}</div>
+                <button onclick="addToCart('${item.name}', ${item.price})">Add</button>
+            </div>
+        `;
+    });
+
+    container.appendChild(h2);
+    container.appendChild(line);
+    container.appendChild(grid);
+}
+
+
+    let cart = {};
+    let total = 0;
+
+    function addToCart(name, price) {
+        if (cart[name]) {
+            cart[name].qty++;
+            cart[name].total += price;
+        } else {
+            cart[name] = { price, qty: 1, total: price };
+        }
+        total += price;
+        updateCart();
+    }
+
+    function updateCart() {
+        const list = document.getElementById("cartItems");
+        list.innerHTML = "";
+        for (let item in cart) {
+            list.innerHTML += `<li>${item} × ${cart[item].qty}</li>`;
+        }
+        document.getElementById("total").innerText = total;
+    }
+
+    function goToBill() {
+        if (total === 0) {
+            alert("Cart is empty");
+            return;
+        }
+        localStorage.setItem("billData", JSON.stringify({ cart, total }));
+        window.location.href = "bill.html";
+    }
+
+    let reviews = JSON.parse(localStorage.getItem("reviews")) || [];
+renderReviews();
+
+function addReview() {
+    const text = document.getElementById("reviewText").value.trim();
+    if (!text) return alert("Please write a review");
+
+    reviews.push({
+        id: Date.now(),
+        userId: userId,   // 🔐 owner
+        text: text
+    });
+
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+    document.getElementById("reviewText").value = "";
+    renderReviews();
+}
+
+function deleteReview(id) {
+    // 🔒 extra safety: delete only if owner
+    reviews = reviews.filter(r => !(r.id === id && r.userId === userId));
+    localStorage.setItem("reviews", JSON.stringify(reviews));
+    renderReviews();
+}
+
+function renderReviews() {
+    const list = document.getElementById("reviewList");
+    list.innerHTML = "";
+
+    reviews.forEach(r => {
+        const li = document.createElement("li");
+        li.className = "review-item";
+        li.innerHTML = `<p>${r.text}</p>`;
+
+        // ✅ Only owner sees delete
+        if (r.userId === userId) {
+            const btn = document.createElement("button");
+            btn.innerText = "Delete";
+            btn.onclick = () => deleteReview(r.id);
+            li.appendChild(btn);
+        }
+
+        list.appendChild(li);
+    });
+}
+</script>
+
+</body>
+</html>
+
+

@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Paradise Restaurant | Login</title>
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .login-body {
+            background-image: url("imgs/food imgs.avif"); /* image from device */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            height: 80vh;
+            margin: 0;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-box {
+            background: rgba(255, 255, 255, 0.85);
+            padding: 30px;
+            border-radius: 10px;
+            width: 350px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="login-body">
+    
+
+    <div class="login-box">
+        <h1>Paradise Restaurant</h1>
+        <p class="subtitle">Login to continue</p>
+
+        <input type="text" id="username" placeholder="Username" autocomplete="off">
+        <input type="password" id="password" placeholder="Password">
+
+        <button onclick="login()">Login</button>
+
+        <p class="register-text">
+            New user? <a href="register.html">Create an account</a>
+        </p>
+
+        <p id="error" class="error"></p>
+    </div>
+
+    <script src="auth.js"></script>
+</body>
+</html>

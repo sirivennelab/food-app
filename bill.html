@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Paradise Restaurant | Bill</title>
+
+<style>
+    body {
+        font-family: "Segoe UI", Arial, sans-serif;
+        background: #f5f5f5;
+        padding: 40px;
+    }
+
+    .bill-container {
+        max-width: 600px;
+        margin: auto;
+        background: white;
+        padding: 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    }
+
+    h2 {
+        text-align: center;
+        color: #e74c3c;
+        margin-bottom: 5px;
+    }
+
+    p {
+        text-align: center;
+        margin-top: 0;
+        color: #555;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+
+    th, td {
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        text-align: left;
+    }
+
+    th {
+        background: #f2f2f2;
+    }
+
+    .total {
+        text-align: right;
+        font-size: 18px;
+        font-weight: bold;
+        margin-top: 15px;
+    }
+
+    .btn {
+        width: 100%;
+        margin-top: 20px;
+        padding: 10px;
+        background: green;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .btn.back {
+        background: #e74c3c;
+        margin-top: 10px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="bill-container">
+    <h2>Paradise Restaurant</h2>
+    <p>Order Bill</p>
+
+    <table id="billTable">
+        <tr>
+            <th>Item</th>
+            <th>Qty</th>
+            <th>Amount (₹)</th>
+        </tr>
+    </table>
+
+    <div class="total">
+        Total: ₹<span id="grandTotal">0</span>
+    </div>
+
+    <button class="btn" onclick="window.print()">Print Bill</button>
+    <button class="btn back" onclick="goBack()">Back to Menu</button>
+</div>
+
+<script>
+    // READ DATA AFTER PAGE LOAD
+    const billData = JSON.parse(localStorage.getItem("billData"));
+    function goBack() {
+        // Optional: clear bill data
+        localStorage.removeItem("billData");
+
+        // Redirect back to menu page
+        window.location.href = "index.html";
+    }
+
+    if (!billData) {
+        alert("No bill data found!");
+        window.location.href = "index.html";
+    }
+
+    const table = document.getElementById("billTable");
+    let total = 0;
+
+    for (let item in billData.cart) {
+        const row = table.insertRow();
+        row.insertCell(0).innerText = item;
+        row.insertCell(1).innerText = billData.cart[item].qty;
+        row.insertCell(2).innerText = billData.cart[item].total;
+        total += billData.cart[item].total;
+    }
+
+    document.getElementById("grandTotal").innerText = total;
+
+    function goBack() {
+        localStorage.removeItem("billData");
+        window.location.href = "index.html";
+    }
+</script>
+
+</body>
+</html>
