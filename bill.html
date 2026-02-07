@@ -5,19 +5,29 @@
 <title>Paradise Restaurant | Bill</title>
 
 <style>
-    body {
+    /* ✅ Background like login page */
+    body.login-body {
+        background-image: url("imgs/food imgs.avif"); /* image from device */
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        height: 100vh;
+        margin: 0;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
         font-family: "Segoe UI", Arial, sans-serif;
-        background: #f5f5f5;
-        padding: 40px;
     }
 
+    /* ✅ Bill container (same as login-box concept) */
     .bill-container {
-        max-width: 600px;
-        margin: auto;
-        background: white;
+        background: rgba(255, 255, 255, 0.88);
         padding: 25px;
-        border-radius: 10px;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        border-radius: 12px;
+        width: 600px;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.3);
     }
 
     h2 {
@@ -71,10 +81,20 @@
         background: #e74c3c;
         margin-top: 10px;
     }
+
+    /* 🖨️ Print clean */
+    @media print {
+        body.login-body {
+            background: white;
+        }
+        .bill-container {
+            box-shadow: none;
+        }
+    }
 </style>
 </head>
 
-<body>
+<body class="login-body">
 
 <div class="bill-container">
     <h2>Paradise Restaurant</h2>
@@ -97,15 +117,7 @@
 </div>
 
 <script>
-    // READ DATA AFTER PAGE LOAD
     const billData = JSON.parse(localStorage.getItem("billData"));
-    function goBack() {
-        // Optional: clear bill data
-        localStorage.removeItem("billData");
-
-        // Redirect back to menu page
-        window.location.href = "index.html";
-    }
 
     if (!billData) {
         alert("No bill data found!");
